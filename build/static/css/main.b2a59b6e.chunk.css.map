@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://src/style.css"],"names":[],"mappings":"AAAA,KACE,sBAAuB,CACvB,iBACF,CAEA,eACE,4BAA6B,CAC7B,SACF","file":"main.b2a59b6e.chunk.css","sourcesContent":[".App {\r\n  font-family: sans-serif;\r\n  text-align: center;\r\n}\r\n  \r\n.strikeThrough {\r\n  text-decoration: line-through;\r\n  color: red;\r\n}"]}
