@@ -1,69 +1,58 @@
-import React from 'react'
+import React from "react";
+class App extends React.Component {
+  setCurrentToDoItem = toDoItem => {
+    this.setState({
+      currentToDoItem: toDoItem
+    });
+  };
 
-export default class App extends React.Component{
-    constructor(props){
-      super(props);
+  saveToDoListItem = toDoItem => {
+    this.setState({
+      toDoList: [...this.state.toDoList, toDoItem]
+    });
+  };
 
-      this.state ={
-          todoItems:[],
-          newtodo :'',
-      };
-    }
+  constructor(props) {
+    super(props);
 
-    updateValue=(event)=>{
-        this.setState({newtodo:event.target.value});
+    this.state = {
+      currentToDoItem: null,
+      toDoList: []
     };
-    
-    newtodo=()=>{
-      this.setState({
-        todoItems:[...this.state.todoItems,
-          {action : this.state.newtodo,done:false},
-        ],
-      });
-    };
-    removeItem = (item)=> {
-      var index=this.state.todoItems.indexOf(item);
-      this.state.todoItems.splice(index, 1);
-      this.setState({todoList: this.state.todoItems})
-    }
-    todorows=()=>
-      this.state.todoItems.map((item)=>(
-        <tr key={item.action}>
-            <td>{item.action}</td>
-            <td>
-              <input
-                type="checkbox"
-                checked={item.done}
-                onChange={()=>this.toggleDone(item)}
-              />
-              <button
-                type="deletebox"
-                onClick={()=>this.removeItem(item)}>
-                delete
-              </button>
-            </td>
-        </tr>
-      ));
-    
-      toggleDone=(todo)=>
-        this.setState({
-          todoItems:this.state.todoItems.map((item)=>
-              item.action === todo.action?{...item,done:!item.done}:item
-          ),
-        });
+  }
 
-    render = () =>(
+  handleClick = e => {
+    e.target.classList.toggle("strikeThrough");
+  };
+
+  removeItem = (index)=> {
+    this.state.toDoList.splice(index, 1);
+    this.setState({toDoList: this.state.toDoList})
+  }
+  render() {
+    return (
       <div>
-        <h2>To Do List</h2>
-        <input 
-            value={this.state.newtodo} 
-            onChange={this.updateValue}
+        <h1>To Do List</h1>
+        <label>To Do Item: </label>
+        <input
+          onChange={event => this.setCurrentToDoItem(event.target.value)}
         />
-        <button onClick={this.newtodo}>Add</button>
-        
-        <table>
-          <tbody>{this.todorows()}</tbody>
-        </table>
+        <button onClick={() => this.saveToDoListItem(this.state.currentToDoItem)}>
+        Add Item
+        </button>
+        <p>{this.state.currentToDoItem}</p>
+        <p>To Do Items</p>
+        <div class="block">
+          {this.state.toDoList.map((item, index) => (
+            <div>
+              <p key={index} onClick={this.handleClick} style={{display: "inline-block"}}>{item}{" "}</p>
+              <button onClick={this.removeItem}>delete</button>
+            </div>
+          ))}
+        </div>
       </div>
-    )
+    );
+  }
 }
+
+export default App;
